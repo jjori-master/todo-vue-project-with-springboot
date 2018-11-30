@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Arrays;
+import java.util.concurrent.atomic.AtomicInteger;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
@@ -52,5 +55,19 @@ public class TodoServiceTest {
 
         Todo deletedTodo = todoService.getTodo(savedTodo.getId());
         assertThat(deletedTodo, nullValue());
+    }
+
+    @Test
+    public void getTodoListTest() {
+        AtomicInteger incrementNumber = new AtomicInteger(1);
+
+        Arrays.stream(new int[11]).forEach(n -> {
+            TodoDto todoDto = new TodoDto("할일" + incrementNumber.getAndIncrement());
+            todoService.createTodo(todoDto);
+        });
+
+        Todo[] todos = todoService.getTodos();
+
+        assertThat(todos.length, is(11));
     }
 }

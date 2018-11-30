@@ -33,4 +33,8 @@ public class TodoService {
     public Todo getTodo(long id) {
         return todoRepository.findById(id).orElse(null);
     }
+
+    public Todo[] getTodos() {
+        return todoRepository.findAll().toArray(new Todo[0]);
+    }
 }
