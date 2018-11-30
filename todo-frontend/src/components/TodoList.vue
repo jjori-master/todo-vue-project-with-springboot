@@ -4,9 +4,9 @@
     <transition-group name="list" tag="ul">
       <li class="shadow"
           v-for="(todoItem, index ) in propsdata"
-          v-bind:key="todoItem">
+          v-bind:key="todoItem.id">
         <i class="checkBtn fa fa-check" aria-hidden="true"></i>
-        {{todoItem}}
+        {{todoItem.content}}
         <span class="removeBtn"
               @click="removeTodo(todoItem, index)">
           <i class="fa fa-trash-o" aria-hidden="true"></i>

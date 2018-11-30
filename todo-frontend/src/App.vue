@@ -28,6 +28,12 @@
                     return;
                 }
 
+                axios.post('/api/todos', todoItem).then((res) => {
+                    this.getTodos();
+                }).catch((err) => {
+                    console.error(err.message);
+                });
+
                 localStorage.setItem(todoItem, todoItem);
                 this.todoItems.push(todoItem);
             },
@@ -39,6 +45,13 @@
                 localStorage.clear();
                 this.todoItems = [];
             },
+            getTodos() {
+                axios.get('/api/todos').then((res) => {
+                    this.todoItems = res.data || [];
+                }).catch((err) => {
+                    console.error(err.message);
+                });
+            }
         },
         components: {
             TodoHeader,
@@ -47,11 +60,7 @@
             TodoInput,
         },
         created() {
-            axios.get('/api/todos').then((res) => {
-                this.todoItems = res.data || [];
-            }).catch((err) => {
-                console.error(err.message);
-            });
+            this.getTodos();
         },
     };
 </script>
