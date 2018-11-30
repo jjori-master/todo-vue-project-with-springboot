@@ -21,6 +21,8 @@ public class Todo {
 
     private String content;
 
+    public Todo() {}
+
     public Todo(String content) {
         this.content = content;
     }

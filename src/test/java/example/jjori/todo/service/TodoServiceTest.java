@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
 
 @SuppressWarnings("NonAsciiCharacters")
@@ -27,5 +28,29 @@ public class TodoServiceTest {
         Todo todo = todoService.createTodo(todoDto);
 
         assertThat(todo.getContent(), is(todoDto.toTodo().getContent()));
+    }
+
+    @Test
+    public void getTodoTest() {
+        TodoDto todoDto = new TodoDto("아침에 감기약 먹기");
+        Todo todo = todoService.createTodo(todoDto);
+
+        Todo savedTodo = todoService.getTodo(todo.getId());
+
+        assertThat(savedTodo, is(todo));
+    }
+
+    @Test
+    public void removeTodoTest() {
+        TodoDto todoDto = new TodoDto("아침에 감기약 먹기");
+        Todo todo = todoService.createTodo(todoDto);
+
+        Todo savedTodo = todoService.getTodo(todo.getId());
+        assertThat(savedTodo, is(todo));
+
+        todoService.removeTodo(savedTodo.getId());
+
+        Todo deletedTodo = todoService.getTodo(savedTodo.getId());
+        assertThat(deletedTodo, nullValue());
     }
 }
