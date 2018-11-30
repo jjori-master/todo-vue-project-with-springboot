@@ -25,4 +25,12 @@ public class TodoService {
 
         return todoRepository.save(todo);
     }
+
+    public void removeTodo(long id) {
+        todoRepository.deleteById(id);
+    }
+
+    public Todo getTodo(long id) {
+        return todoRepository.findById(id).orElse(null);
+    }
 }
